@@ -55,7 +55,7 @@ import {
   isEmptyArmorModSocket,
   isUsedArmorModSocket,
 } from 'app/utils/socket-utils';
-import { InventoryWishListRoll } from 'app/wishlists/wishlists';
+import { InventoryWishListRolls } from 'app/wishlists/wishlists';
 import { DestinyClass } from 'bungie-api-ts/destiny2';
 import clsx from 'clsx';
 import { D2EventInfo } from 'data/d2/d2-event-info';
@@ -97,7 +97,7 @@ export function getColumns(
   },
   classType: DestinyClass,
   itemInfos: ItemInfos,
-  wishList: (item: DimItem) => InventoryWishListRoll | undefined,
+  wishList: (item: DimItem) => InventoryWishListRolls | undefined,
   hasWishList: boolean,
   customTotalStat: number[],
   loadoutsByItem: LoadoutsByItem,
@@ -317,7 +317,7 @@ export function getColumns(
         header: t('Organizer.Columns.WishList'),
         value: (item) => {
           const roll = wishList(item);
-          return roll ? (roll.isUndesirable ? false : true) : undefined;
+          return roll ? (roll.displayedWishListRoll.isUndesirable ? false : true) : undefined;
         },
         cell: (value) =>
           value !== undefined ? (
@@ -551,7 +551,7 @@ export function getColumns(
       hasWishList && {
         id: 'wishListNote',
         header: t('Organizer.Columns.WishListNotes'),
-        value: (item) => wishList(item)?.notes?.trim() ?? '',
+        value: (item) => wishList(item)?.displayedWishListRoll.notes?.trim() ?? '',
         gridWidth: 'minmax(200px, 1fr)',
         filter: (value: string) => `wishlistnotes:${quoteFilterString(value)}`,
       },

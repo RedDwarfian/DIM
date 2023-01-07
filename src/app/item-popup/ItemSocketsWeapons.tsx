@@ -116,7 +116,7 @@ export default function ItemSocketsWeapons({ item, minimal, grid, onPlugClicked 
       key={socketInfo.socketIndex}
       item={item}
       socket={socketInfo}
-      wishlistRoll={wishlistRoll}
+      wishlistRoll={wishlistRoll?.displayedWishListRoll}
       onClick={handleSocketClick}
     />
   );
@@ -183,7 +183,7 @@ export default function ItemSocketsWeapons({ item, minimal, grid, onPlugClicked 
                       key={socketInfo.socketIndex}
                       item={item}
                       socket={socketInfo}
-                      wishlistRoll={wishlistRoll}
+                      wishlistRoll={wishlistRoll?.displayedWishListRoll}
                       onClick={handleSocketClick}
                     />
                   )

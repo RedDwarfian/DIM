@@ -8,7 +8,7 @@ import { Loadout } from 'app/loadout-drawer/loadout-types';
 import { LoadoutsByItem } from 'app/loadout-drawer/selectors';
 import { Settings } from 'app/settings/initial-settings';
 import { WishListRoll } from 'app/wishlists/types';
-import { InventoryWishListRoll } from 'app/wishlists/wishlists';
+import { InventoryWishListRolls } from 'app/wishlists/wishlists';
 type I18nInput = Parameters<typeof t>;
 
 // a filter can return various bool-ish values
@@ -27,7 +27,7 @@ export interface FilterContext {
   allItems: DimItem[];
   currentStore: DimStore;
   loadoutsByItem: LoadoutsByItem;
-  wishListFunction: (item: DimItem) => InventoryWishListRoll | undefined;
+  wishListFunction: (item: DimItem) => InventoryWishListRolls | undefined;
   wishListsByHash: _.Dictionary<WishListRoll[]>;
   newItems: Set<string>;
   itemInfos: ItemInfos;

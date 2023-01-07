@@ -1330,6 +1330,8 @@
     }
   },
   "WishListRoll": {
+    "AltRatedTip": "This perk exactly matches another weapon roll on your wishlist.",
+    "AltRatedTip_plural": "These perks exactly match another weapon roll on your wishlist.",
     "BestRatedKey": " = wishlist perk",
     "BestRatedTip": "This perk exactly matches a weapon roll on your wishlist.",
     "BestRatedTip_plural": "These perks exactly match a weapon roll on your wishlist.",

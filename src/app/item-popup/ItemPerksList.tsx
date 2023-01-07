@@ -48,7 +48,7 @@ export default function ItemPerksList({ item, perks, onClick }: Props) {
               key={socketInfo.socketIndex}
               item={item}
               socket={socketInfo}
-              wishlistRoll={wishlistRoll}
+              wishlistRoll={wishlistRoll?.displayedWishListRoll}
               selectedPerk={selectedPerk}
               onPerkSelected={onPerkSelected}
             />

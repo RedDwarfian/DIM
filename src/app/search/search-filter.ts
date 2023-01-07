@@ -22,7 +22,7 @@ import { DimStore } from '../inventory/store-types';
 import { LoadoutsByItem, loadoutsByItemSelector } from '../loadout-drawer/selectors';
 import { querySelector } from '../shell/selectors';
 import { wishListFunctionSelector, wishListsByHashSelector } from '../wishlists/selectors';
-import { InventoryWishListRoll } from '../wishlists/wishlists';
+import { InventoryWishListRolls } from '../wishlists/wishlists';
 import {
   canonicalFilterFormats,
   FilterContext,
@@ -94,7 +94,7 @@ function makeSearchFilterFactory(
   allItems: DimItem[],
   currentStore: DimStore,
   loadoutsByItem: LoadoutsByItem,
-  wishListFunction: (item: DimItem) => InventoryWishListRoll | undefined,
+  wishListFunction: (item: DimItem) => InventoryWishListRolls | undefined,
   wishListsByHash: _.Dictionary<WishListRoll[]>,
   newItems: Set<string>,
   itemInfos: ItemInfos,

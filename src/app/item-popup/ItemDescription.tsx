@@ -33,12 +33,12 @@ export default function ItemDescription({ item }: { item: DimItem }) {
           )}
         </>
       )}
-      {!$featureFlags.triage && wishlistItem && Boolean(wishlistItem?.notes?.length) && (
+      {!$featureFlags.triage && wishlistItem && Boolean(wishlistItem?.displayedWishListRoll.notes?.length) && (
         <ExpandableTextBlock linesWhenClosed={3} className={styles.description}>
           <span className={styles.wishListLabel}>
             {t('WishListRoll.WishListNotes', { notes: '' })}
           </span>
-          <span className={styles.wishListTextContent}>{wishlistItem.notes}</span>
+          <span className={styles.wishListTextContent}>{wishlistItem.displayedWishListRoll.notes}</span>
         </ExpandableTextBlock>
       )}
       <NotesArea item={item} className={styles.description} />

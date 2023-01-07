@@ -32,6 +32,46 @@ export interface InventoryWishListRoll {
 }
 
 /**
+ * A collection of InventoryWishListRolls - This will contain all of the applicable wish list rolls
+ * for a given DimItem. It will also keep track of what roll is currently being displayed.
+ */
+export class InventoryWishListRolls {
+  /** The collection of all applicable wishListRolls */
+  wishListRolls: InventoryWishListRoll[];
+  /** The currently displayed InventoryWishListRoll */
+  displayedWishListRoll: InventoryWishListRoll;
+
+  constructor(wishListRolls: InventoryWishListRoll[], plugged: Set<number>) {
+    this.wishListRolls = wishListRolls;
+    this.displayedWishListRoll = this.wishListRolls[0];
+    if (plugged) {
+      this.setDisplayedWishListRoll(plugged);
+    }
+  }
+
+  setDisplayedWishListRoll(perkList: InventoryWishListRoll | Set<number>) {
+    if (perkList instanceof Set<number>) {
+      // Select the first set that matches the perklist.
+      // If it doesn't match any, don't change it.
+      this.displayedWishListRoll = this.wishListRolls.find((roll) => {
+        // For each roll in the wishListRolls, go through all perks in them.
+        // If there is a perk in the inputted perkList, it is not a match.
+        for (const _perkNum of roll.wishListPerks.values()) {
+          if (!perkList.has(_perkNum)) {
+            return false;
+          }
+        }
+        return true;
+      }) ?? this.displayedWishListRoll;
+    } else {
+      if (this.wishListRolls.includes(perkList)) {
+        this.displayedWishListRoll = perkList;
+      }
+    }
+  }
+}
+
+/**
  * Is this a weapon or armor plug that we'll consider?
  * This is in place so that we can disregard intrinsics, shaders/cosmetics
  * and other things (like masterworks) which add more variance than we need.
@@ -149,20 +189,28 @@ function allDesiredPerksExist(item: DimItem, wishListRoll: WishListRoll): boolea
   );
 }
 
-/** Get the InventoryWishListRoll for this item. */
-export function getInventoryWishListRoll(
+/** Get the InventoryWishListRolls for this item. */
+export function getInventoryWishListRolls(
   item: DimItem,
   wishListRolls: { [itemHash: number]: WishListRoll[] }
-): InventoryWishListRoll | undefined {
+): InventoryWishListRolls | undefined {
   // It could be under the item hash, the wildcard, or any of the item's categories
   for (const hash of [item.hash, DimWishList.WildcardItemId, ...item.itemCategoryHashes]) {
-    const matchingWishListRoll = wishListRolls[hash]?.find((cr) => allDesiredPerksExist(item, cr));
-    if (matchingWishListRoll) {
-      return {
-        wishListPerks: getWishListPlugs(item, matchingWishListRoll),
-        notes: matchingWishListRoll.notes,
-        isUndesirable: matchingWishListRoll.isUndesirable,
-      };
+    const matchingWishListRolls = wishListRolls[hash]?.filter((cr) => allDesiredPerksExist(item, cr));
+    if (matchingWishListRolls) {
+      const itemPerkHashSet = new Set<number>;
+      item.sockets?.allSockets.filter((socket) => socket.plugged)
+        .map((socket) => socket.plugged?.plugDef.hash)
+        .forEach((hash) => {
+          if (hash) { itemPerkHashSet.add(hash); }
+        })
+      return new InventoryWishListRolls(matchingWishListRolls.map((matchingWishListRoll) => (
+        {
+          wishListPerks: getWishListPlugs(item, matchingWishListRoll),
+          notes: matchingWishListRoll.notes,
+          isUndesirable: matchingWishListRoll.isUndesirable,
+        }
+      )), itemPerkHashSet);
     }
   }
 }

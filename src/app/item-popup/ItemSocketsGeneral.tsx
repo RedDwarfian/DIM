@@ -134,7 +134,7 @@ export default function ItemSocketsGeneral({ item, minimal, onPlugClicked }: Pro
                   key={socketInfo.socketIndex}
                   item={item}
                   socket={socketInfo}
-                  wishlistRoll={wishlistRoll}
+                  wishlistRoll={wishlistRoll?.displayedWishListRoll}
                   onClick={handleSocketClick}
                 />
               ))}

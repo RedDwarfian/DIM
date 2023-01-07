@@ -34,12 +34,12 @@ export default function ApplyPerkSelection({
     // Find wishlist perks that aren't selected
     if (
       wishlistRoll &&
-      !wishlistRoll.isUndesirable &&
+      !wishlistRoll.displayedWishListRoll.isUndesirable &&
       socket.isPerk &&
       socket.plugOptions.length > 1
     ) {
       const wishlistPlug = socket.plugOptions.find((p) =>
-        wishlistRoll.wishListPerks.has(p.plugDef.hash)
+        wishlistRoll.displayedWishListRoll.wishListPerks.has(p.plugDef.hash)
       );
       if (
         wishlistPlug &&

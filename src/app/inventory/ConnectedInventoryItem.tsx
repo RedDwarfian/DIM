@@ -59,7 +59,7 @@ export default function ConnectedInventoryItem({
         isNew={isNew}
         tag={tag}
         notes={notes}
-        wishlistRoll={wishlistRoll}
+        wishlistRoll={wishlistRoll?.displayedWishListRoll}
         onClick={onClick}
         onShiftClick={onShiftClick}
         onDoubleClick={onDoubleClick}
